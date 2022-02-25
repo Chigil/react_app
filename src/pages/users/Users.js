@@ -7,16 +7,19 @@ const Users = () => {
     const [showModal, setShowModal] = useState(false)
     const [users, setUsers] = useState([
         {
+            id: 1,
             name: 'Franko',
             age: 32,
             country: 'USA',
         },
         {
+            id: 2,
             name: 'Stefano',
             age: 25,
             country: 'Italy',
         },
         {
+            id: 3,
             name: 'Macumoto',
             age: 66,
             country: 'Japan',
