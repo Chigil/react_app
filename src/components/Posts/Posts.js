@@ -1,7 +1,9 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MyModal from "../MyModal/MyModal";
 import Crud from "../../services/crud.service";
 import Spinner from "../Spinner";
+import {useSortedAndSearchedPosts} from "../../hooks/usePosts";
+
 
 const Posts = () => {
     const postsCrud = new Crud('posts');
@@ -43,16 +45,9 @@ const Posts = () => {
         setSorter(+e.target.value)
     };
 
-    const sortedPosts = useMemo(() => {
-        if (sorter) {
-            return [...usersPosts].sort((a, b) => b.id - a.id)
-        }
-        return usersPosts
-    }, [sorter, usersPosts])
+   const sortedAndSearchedPosts = useSortedAndSearchedPosts(usersPosts, sorter, searchQuery);
 
-    const sortedAndSearchedPosts = useMemo(() => {
-        return sortedPosts.filter((post) => post.title.toLowerCase().includes(searchQuery.toLowerCase()))
-    }, [searchQuery, sortedPosts])
+
     return (
         <div className="container">
             <div className="input-group mt-3">
