@@ -1,31 +1,31 @@
 import React, {useContext, useState} from 'react';
 import AuthContext from "../context/context";
+import http from '../http'
+import {LOGIN} from "../reducer/reducer";
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
-    const [values, setValues] = useState({ login:'', password:'' });
+    const { state, dispatch } = useContext(AuthContext);
+    const [values, setValues] = useState({ username:'', password:'' });
     const onChange = (e) => {
         const field = e.target.id;
         setValues({...values, [field]: e.target.value})
     };
-    console.log(values)
-    const login = () => {
-        const user = {login: 'test@gmail.com', password: '12345'}
-        if (values.password === user.password && values.login === user.login) {
-            return setAuth(true)
-        }
-    }
+    const login = (e) => {
+        e.preventDefault();
+        http.post('https://fakestoreapi.com/auth/login', values).then((res) => {
+            dispatch({ type: LOGIN, data: res.data.token });
+            window.localStorage.setItem("token", res.data.token)
+        }).catch((e) => console.log(e))
+    };
     return (
         <form className="container mt-5 col-6">
             <div className="mb-3">
-                <label htmlFor="login" className="form-label">Email address</label>
-                <input type="email"
+                <label htmlFor="username" className="form-label">Username</label>
+                <input type="text"
                        className="form-control"
-                       id="login"
-                       aria-describedby="emailHelp"
+                       id="username"
                        onChange={onChange}
                 />
-                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div className="mb-3">
                 <label htmlFor="password" className="form-label">Password</label>
@@ -42,7 +42,7 @@ const Login = () => {
                 />
                     <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
             </div>
-            <button type="submit" className="btn btn-primary" onClick={login}>Submit</button>
+            <button className="btn btn-primary" onClick={login}>Submit</button>
         </form>
     );
 };

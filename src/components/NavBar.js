@@ -1,11 +1,12 @@
 import React, {useContext, useState} from 'react';
 import {Link} from "react-router-dom";
 import AuthContext from "../context/context";
+import { LOGOUT } from "../reducer/reducer";
 
 
 const NavBar = () => {
     const [menuActive, setMenuActive] = useState(false);
-    const { auth, setAuth } = useContext(AuthContext);
+    const { state, dispatch } = useContext(AuthContext);
     const links = [
         {
             name: 'Home',
@@ -27,6 +28,11 @@ const NavBar = () => {
     const toggleMenu = () => {
         setMenuActive(!menuActive)
     };
+    const logout = () => {
+        dispatch({ type: LOGOUT, data: null });
+        window.localStorage.clear();
+    };
+    console.log(state);
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
@@ -52,9 +58,9 @@ const NavBar = () => {
                         )}
                     </ul>
                 </div>
-                {auth ?
+                {state.auth ?
                     <button className="btn btn-outline-secondary"
-                            onClick={() => setAuth(false)}
+                            onClick={logout}
                     >LogOut
                     </button>
                     :

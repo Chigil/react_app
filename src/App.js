@@ -3,15 +3,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AppRouter from "./components/AppRouter";
 import {BrowserRouter} from "react-router-dom";
 import AuthContext from "./context/context";
-import {useState} from "react";
+import {useReducer} from "react";
+import {reducer} from "./reducer/reducer";
 
 
 const App = () => {
-    const [auth, setAuth] = useState(false);
+    const auth = window.localStorage.getItem("token");
+    const [state, dispatch] = useReducer(reducer, {auth: auth, name: ''});
     return (
         <AuthContext.Provider value={{
-            auth,
-            setAuth
+            state,
+            dispatch
         }}>
             <div className="App">
                 <BrowserRouter>
