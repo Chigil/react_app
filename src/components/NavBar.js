@@ -1,12 +1,12 @@
 import React, {useContext, useState} from 'react';
 import {Link} from "react-router-dom";
-import AuthContext from "../context/context";
+import Context from "../context/context";
 import { LOGOUT } from "../reducer/reducer";
 
 
 const NavBar = () => {
     const [menuActive, setMenuActive] = useState(false);
-    const { state, dispatch } = useContext(AuthContext);
+    const { state, dispatch } = useContext(Context);
     const links = [
         {
             name: 'Home',

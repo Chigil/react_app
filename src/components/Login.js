@@ -1,10 +1,10 @@
 import React, {useContext, useState} from 'react';
-import AuthContext from "../context/context";
 import http from '../http'
 import {LOGIN} from "../reducer/reducer";
+import Context from "../context/context";
 
 const Login = () => {
-    const { state, dispatch } = useContext(AuthContext);
+    const { state, dispatch } = useContext(Context);
     const [values, setValues] = useState({ username:'', password:'' });
     const onChange = (e) => {
         const field = e.target.id;

@@ -5,12 +5,12 @@ import Counter from "./Counter";
 import Posts from "./Posts/Posts";
 import UserEdit from "../pages/users/UserEdit";
 import NotFound from "../pages/NotFound";
-import AuthContext from "../context/context";
+import Context from "../context/context";
 import Login from "./Login";
 
 
 const AppRouter = () => {
-    const {state} = useContext(AuthContext);
+    const {state} = useContext(Context);
     return (
         state.auth ?
             <Routes>

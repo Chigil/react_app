@@ -1,33 +1,26 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import UserList from "./UserList";
 import UserAdd from "./UserAdd";
 import MyModal from "../../components/MyModal/MyModal";
+import Context from "../../context/context";
+import Crud from "../../services/crud.service";
+import {setUsers} from "../../reducer/reducer";
 
 const Users = () => {
-    const [showModal, setShowModal] = useState(false)
-    const [users, setUsers] = useState([
-        {
-            id: 1,
-            name: 'Franko',
-            age: 32,
-            country: 'USA',
-        },
-        {
-            id: 2,
-            name: 'Stefano',
-            age: 25,
-            country: 'Italy',
-        },
-        {
-            id: 3,
-            name: 'Macumoto',
-            age: 66,
-            country: 'Japan',
-        },
-    ]);
+    const usersCrud = new Crud('users');
+    const [showModal, setShowModal] = useState(false);
+    const {state, dispatch} = useContext(Context);
+    const getUsers = () => {
+        usersCrud.getAll().then((res) => {
+           dispatch(setUsers(res.data))
+        })
+    }
+    useEffect(()=> {
+        getUsers();
+    },[])
     return (
         <div className="container">
-            <UserList users={users} />
+         <UserList users={state.users} />
             <button
                 className="btn btn-secondary"
                 onClick={() => setShowModal(true)}
@@ -39,7 +32,7 @@ const Users = () => {
                 onCancel={() => setShowModal(false)}
                 closeButtonShow
             >
-                <UserAdd users={users} setUsers={setUsers} closeModal={() => setShowModal(false)}  />
+                <UserAdd closeModal={() => setShowModal(false)}  />
             </MyModal>
         </div>
     );

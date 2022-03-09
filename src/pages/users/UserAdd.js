@@ -1,27 +1,36 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useState} from "react";
+import Context from "../../context/context";
+import Crud from "../../services/crud.service";
+import {addNewUser} from "../../reducer/reducer";
 
-const UserAdd = ({users, setUsers, closeModal}) => {
+const UserAdd = ({closeModal}) => {
+    const {state, dispatch} = useContext(Context);
+    const usersCrud = new Crud('users');
     const onChange = (e) => {
         const field = e.target.id;
         setValues({...values, [field]: e.target.value})
     };
     const addUser = () => {
-        setUsers([...users, values]);
-        setValues({
-            name: '',
-            age: '',
-            country: '',
+        usersCrud.create(values).then((res) => {
+            dispatch(addNewUser(res.data))
+            setValues({
+                name: '',
+                age: '',
+                country: '',
+                id: Date.now(),
+            })
+            closeModal()
         })
-        closeModal()
     };
 
     const [values, setValues] = useState({
         name: '',
         age: '',
         country: '',
+        id: Date.now(),
     });
-
+    console.log(values)
     return (
         <>
             {Object.keys(values).map((value, index) => {
