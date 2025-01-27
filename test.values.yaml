@@ -1,2 +1,5 @@
-   -name: "Hello"
-1REMOVED"
+env:
+  - name: VALUE1
+s*value: "REMOVED"
+  - name: VALUE2
+s*value: "REMOVED"
