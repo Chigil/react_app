@@ -3,3 +3,7 @@ env:
 s*value: "REMOVED"
   - name: VALUE2
 s*value: "REMOVED"
+  - name: VALUE1
+s*value: "REMOVED"
+  - name: VALUE2
+s*value: "REMOVED"
